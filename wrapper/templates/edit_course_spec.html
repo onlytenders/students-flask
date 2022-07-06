@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Edit course
+{% endblock %}
+
+{% block body %}
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
+<h3>Изменить разделы курса</h3>
+
+<form action="" method="post" id="form1" name="form">
+  {{ form.hidden_tag() }}
+
+  <br>
+
+  <h4>Course specification</h4>
+
+  <input type="text" id="add_spec"> <button type="button" id="add_spec_button" onclick='addNewForm("specification", "spec")'>Add spec</button>
+
+  <div id="specification">
+    {% for el in range(0, form.specification|length) %}
+    <div class="spec">
+      {{ form.specification[el].label() }} {{ form.specification[el](value=course.specification[el]) }} <button type="button" onclick="deleteForm(this)">Delete</button>
+    </div>
+    {% endfor %}
+  </div>
+  <br>
+
+
+  <br><br>
+
+  <h4>Testing</h4>
+
+  <input type="text" id="add_test"> <button type="button" id="add_test_button" onclick='addNewForm("tests", "test")'>Add test</button>
+
+  <div id="tests">
+    {{ form.testing_min.label() }} {{ form.testing_min(value=course.testing_min) }}
+    {% for el in range(0, form.tests|length) %}
+    <div class="test">
+      {{ form.tests[el].label() }} {{ form.tests[el](value=course.tests[el]) }} <button type="button" onclick="deleteForm(this)">Delete</button>
+    </div>
+    {% endfor %}
+  </div>
+
+  <br><br>
+
+  <button type="button" onclick="window.location.href='{{ url_for('edit_course', course_id=course.id) }}'">Назад</button>
+</form>
+
+<script type="text/javascript">
+  let blankSpec = document.getElementsByClassName("spec")[0].cloneNode(true)
+  blankSpec.getElementsByTagName('input')[0].value = ''
+
+  let blankTest = document.getElementsByClassName("test")[0].cloneNode(true)
+  blankTest.getElementsByTagName('input')[0].value = ''
+
+  function addNewForm(wrapper, el) {
+    if ((document.getElementById('add_spec').value != '' && wrapper == 'specification') || (document.getElementById('add_test').value != '' && wrapper == 'tests')) {
+      let spec_wrapper = document.getElementById(wrapper)
+      let spec_inputs = spec_wrapper.getElementsByTagName('input')
+
+      let max = 0
+      for (var i = 0; i < spec_inputs.length; i++) {
+        if (spec_inputs[i].id.split('-')[1] > max) {
+          max = parseInt(spec_inputs[i].id.split('-')[1])
+        }
+      }
+
+      let new_name = ''
+      let new_spec = ''
+      if (wrapper == "specification") {
+        new_name = blankSpec.getElementsByTagName('input')[0].name.split('-')
+        new_spec = blankSpec.cloneNode(true)
+        new_spec.getElementsByTagName('input')[0].value = document.getElementById('add_spec').value
+      } else if (wrapper == "tests") {
+        new_name = blankTest.getElementsByTagName('input')[0].name.split('-')
+        new_spec = blankTest.cloneNode(true)
+        new_spec.getElementsByTagName('input')[0].value = document.getElementById('add_test').value
+      }
+      new_name.pop()
+      new_name.push(max+1)
+      new_name = new_name.join('-')
+
+      new_spec.getElementsByTagName("label")[0].setAttribute("for", new_name)
+      new_spec.getElementsByTagName("input")[0].setAttribute("id", new_name)
+      new_spec.getElementsByTagName("input")[0].setAttribute("name", new_name)
+
+      spec_wrapper.appendChild(new_spec)
+      document.getElementById("form1").submit()
+    }
+  }
+
+  function deleteForm(el) {
+    el.parentNode.remove()
+    document.getElementById("form1").submit()
+  }
+</script>
+
+{% endblock %}

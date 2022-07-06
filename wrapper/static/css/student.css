@@ -1,0 +1,191 @@
+body {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3 {
+  text-align: center;
+  display: block;
+}
+
+h1 {
+  font-size: 28px;
+}
+
+h2 {
+  font-size: 23px;
+}
+
+h3 {
+  font-size: 18px;
+}
+
+h4 {
+  font-size: 15px;
+}
+
+h6 {
+  font-size: 12px;
+}
+
+p {
+  font-size: 12px;
+  font-weight: lighter;
+}
+
+div {
+  width: 100%;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 1000px;
+}
+
+.content1 {
+  display: flex;
+  justify-content: space-around;
+}
+
+.col1 {
+  width: 25%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.data {
+  width: 90%;
+}
+
+.contacts {
+  width: 90%;
+}
+
+.col2 {
+  width: 75%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 5%;
+}
+
+.line {
+  height: 1px;
+  background-color: #e1e1e1;
+  width: 100%;
+  margin-top: 5%;
+}
+
+.overall_result_values {
+  display: flex;
+}
+
+.overall_result_col {
+  display: flex;
+  justify-content: space-around;
+}
+
+.overall_result_col > h1 {
+  display: block;
+  width: 30%;
+}
+
+.overall_result_col > h3 {
+  display: block;
+  width: 30%;
+}
+
+img {
+  width: 90%;
+}
+
+.bars-big-labels {
+  display: flex;
+  justify-content: space-around;
+}
+
+.bars-col {
+  width: 45%;
+}
+
+.best-worst {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.best-worst-col {
+  width: 45%;
+}
+
+.bars {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.bars-percent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.bars-percent > h6 {
+  padding: 0;
+  margin: 0;
+}
+
+.bar {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.progress-bar {
+  width: 60%;
+}
+
+.bars-label {
+  width: 30%;
+  margin: 0;
+}
+
+.textareas {
+  padding-bottom: 5%;
+}
+
+.textareas-label {
+  font-size: 15px;
+  text-align: left;
+}
+
+.textarea {
+  font-size: 10px;
+}
+
+.navigation {
+  display: flex;
+  justify-content: center;
+  padding: 50px 0;
+}
+
+.content2 {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin: 20px;
+}
+
+.content2-col {
+  width: 50%;
+  padding-right: 5%;
+}

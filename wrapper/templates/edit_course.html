@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Edit course
+{% endblock %}
+
+{% block body %}
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
+<h3>Edit Course</h3>
+
+<form action="" method="post">
+  {{ form.hidden_tag() }}
+
+  {{ form.name.label() }} {{ form.name(value=course.name) }} <br>
+  {{ form.price.label() }} {{ form.price(value=course.price) }} <br>
+
+  {{ form.date_started.label() }} {{ form.date_started(class='datepicker', value=course.date_started) }} <br>
+  {{ form.date_ended.label() }} {{ form.date_ended(class='datepicker', value=course.date_ended) }} <br>
+
+  {{ form.description.label() }} {{ form.description(value=course.description) }} <br>
+
+  <br>
+
+  <button type="button" onclick="window.location.href='{{ url_for('edit_course_spec', course_id=course.id) }}'">Изменить спецификацию и тестирование курса</button>
+
+  <h4>Course specification</h4>
+
+  <div id="specification">
+    {% for el in range(0, form.specification|length) %}
+    <div class="spec">
+      {{ form.specification[el].label() }} {{ course.specification[el] }}
+    </div>
+    {% endfor %}
+  </div>
+  <br>
+
+
+  <br><br>
+
+  <h4>Testing</h4>
+  <div id="tests">
+    {{ form.testing_min.label() }} {{ course.testing_min }}
+    {% for el in range(0, form.tests|length) %}
+    <div class="test">
+      {{ form.tests[el].label() }} {{ course.tests[el] }}
+    </div>
+    {% endfor %}
+  </div>
+
+  <br><br>
+
+  {{ form.submit() }}
+</form>
+
+<script type="text/javascript">
+  let blankSpec = document.getElementsByClassName("spec")[0].cloneNode(true)
+  let blankTest = document.getElementsByClassName("test")[0].cloneNode(true)
+
+  function addNewForm(wrapper, el) {
+    let spec_wrapper = document.getElementById(wrapper)
+    let spec_inputs = spec_wrapper.getElementsByTagName('input')
+
+    let max = 0
+    for (var i = 0; i < spec_inputs.length; i++) {
+      if (spec_inputs[i].id.split('-')[1] > max) {
+        max = parseInt(spec_inputs[i].id.split('-')[1])
+      }
+    }
+
+    let new_name = ''
+    let new_spec = ''
+    if (wrapper == "specification") {
+      new_name = blankSpec.getElementsByTagName('input')[0].name.split('-')
+      new_spec = blankSpec.cloneNode(true)
+    } else if (wrapper == "tests") {
+      new_name = blankTest.getElementsByTagName('input')[0].name.split('-')
+      new_spec = blankTest.cloneNode(true)
+    }
+    new_name.pop()
+    new_name.push(max+1)
+    new_name = new_name.join('-')
+
+    new_spec.getElementsByTagName("label")[0].setAttribute("for", new_name)
+    new_spec.getElementsByTagName("input")[0].setAttribute("id", new_name)
+    new_spec.getElementsByTagName("input")[0].setAttribute("name", new_name)
+
+    spec_wrapper.appendChild(new_spec)
+  }
+
+  function deleteForm(el) {
+    el.parentNode.remove()
+  }
+</script>
+
+{% endblock %}

@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ student.name }} {{ student.surname }}
+{% endblock %}
+
+{% block css %}
+{{ url_for('static', filename='css/student.css') }}
+{% endblock %}
+
+{% block body %}
+
+<div class="wrapper">
+<div class="content">
+  <div class="content1">
+    <div class="col1">
+      <h1>Студент</h1>
+      <div class="names">
+        <h3 class="name">{{ student.surname }}</h3>
+        <h3 class="name">{{ student.name }}</h3>
+        <h3 class="name">{{ student.father_name }}</h3>
+      </div>
+      <img src="{{ url_for('static', filename='uploads/' + student.profile_pic) }}" alt="" class="profile_pic">
+      <div class="data">
+        <p>Дата рождения: {{ student.birth_date }}</p>
+        <p>Место работы: {{ student.workplace }}</p>
+        <p>Опыт работы: {{ student.work_experience }}</p>
+      </div>
+      <div class="contacts">
+        <p>Номер телефона: {{ student.phone_number }}</p>
+        <p>Электронная почтв: {{ student.email }}</p>
+      </div>
+    </div>
+    <div class="col2">
+      <div class="col-2-header">
+        <h1>Характеристика</h1>
+        <h2>На основании прохождения курса <br>"{{ course.name }}"</h2>
+      </div>
+      <div class="col2-main">
+        <h3>Период обучения: {{ student.date_started }} - {{ student.date_ended }}</h3>
+        <div class="line"></div>
+        <h2>Общий результат</h2>
+        <div class="overall_result_values">
+          {% for el in student.tests %}
+          <div class="overall-result-col">
+            <h3>{{ el['test_name'] }}</h3>
+            <h1>{{ el['test_grade'] }}%</h1>
+          </div>
+          {% endfor %}
+        </div>
+        <div class="bars-big-labels">
+          <div class="bars-col">
+            <h4>5 наиболее результативных разделов</h4>
+          </div>
+          <div class="bars-col">
+            <h4>5 наиболее проблемных разделов</h4>
+          </div>
+        </div>
+        <div class="bars">
+          <div class="best-worst">
+            <div class="best-worst-col">
+              {% for el in student.best %}
+              <div class="bar">
+                <h6 class="bars-label">{{ el['qual_name'] }}</h6>
+                <div class="bars-percent">
+                  <div class="w3-pink progress-bar" style="width:90%;height:10px;">
+                    <div class="w3-green" style="height:10px; width:{{ el['value'] }}%"></div>
+                  </div>
+                  <h6>{{ el['value'] }}%</h6>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+            <div class="best-worst-col">
+              {% for el in student.worst %}
+              <div class="bar">
+                <h6 class="bars-label">{{ el['qual_name'] }}</h6>
+                <div class="bars-percent">
+                  <div class="w3-pink progress-bar" style="width:90%;height:10px;">
+                    <div class="w3-green" style="height:10px; width:{{ el['value'] }}%"></div>
+                  </div>
+                  <h6>{{ el['value'] }}%</h6>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="line"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="content2">
+    <div class="content2-col">
+      <div class="content2-label">
+        <h3>Оценка результативности тестирования</h3>
+      </div>
+      <div class="bars">
+      {% for el in student.grades %}
+      <div class="bar">
+        <h6 class="bars-label">{{ el['course_name'] }}</h6>
+        <div class="bars-percent">
+          <div class="w3-pink progress-bar" style="width:90%;height:10px;">
+            <div class="w3-green" style="height:10px; width:{{ el['course_grade'] }}%"></div>
+          </div>
+          <h6>{{ el['course_grade'] }}%</h6>
+        </div>
+      </div>
+      {% endfor %}
+      </div>
+    </div>
+    <div class="content2-col">
+      <div class="content2-label">
+        <h3>Комментарии</h3>
+      </div>
+      <h2 class="textareas-label">Проблемные точки</h2>
+      <p class="textarea">{{ student.problem_points }}</p>
+      <div class="line"></div>
+      <h2 class="textareas-label">Общая оценка</h2>
+      <p class="textarea">{{ student.overall_evaluation }}</p>
+      <div class="line"></div>
+      <h2 class="textareas-label">Рекомендации для работодателя</h2>
+      <p class="textarea">{{ student.recommendations }}</p>
+    </div>
+  </div>
+</div>
+
+<div class="navigation">
+<button onclick="download()" class="w3-button w3-green">Скачать PDF</button>
+</div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script type="text/javascript">
+  function download() {
+    var first = document.getElementsByClassName("content")[0].cloneNode(true)
+
+    var opt = {
+      margin: 5,
+      filename: "{{ student.name }} {{ student.surname }}.pdf",
+      image: { type: 'jpeg', quality: 1},
+      html2canvas: { scale: 3, y: 0, scrollY: 0 },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    }
+
+    html2pdf().set(opt).from(first).save()
+  }
+</script>
+
+{% endblock %}

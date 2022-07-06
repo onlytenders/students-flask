@@ -1,0 +1,246 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Add new evaluation
+{% endblock %}
+
+{% block body %}
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
+<h3>Add new evaluation</h3>
+<button type="button" name="button" onclick="addNew()">Add new student</button>
+<button type="button" name="button" onclick="deleteMarked()">Delete marked</button><br>
+<button type="button" name="button" onclick="markAll()">Mark all</button>
+<button type="button" name="button" onclick="unmarkAll()">Unmark all</button> <br><br>
+<input type="number" id="addSeveralInput" name="number_add" value=""><button type="button" name="button" onclick="addSeveral()">Add several</button><br>
+<br><hr><br>
+<form method="post" action="" enctype="multipart/form-data">
+  {{ students.hidden_tag() }}
+  <div id="allForms">
+    {% for form in students.forms %}
+
+    <div class="form">
+      <input type="checkbox" class="mark"> <br>
+
+      {{ form.profile_pic.label() }} {{ form.profile_pic(class='profile_pic form_input') }} <br>
+
+      <br>
+
+      {{ form.firstname.label() }} {{ form.firstname(class='firstname form_input') }}
+      <button type="button" name="button" onclick="dublicateEverywhere('firstname', this)">Dublicate</button><br>
+
+      {{ form.surname.label() }} {{ form.surname(class='surname form_input') }}
+      <button type="button" name="button" onclick="dublicateEverywhere('surname', this)">Dublicate</button><br>
+
+      {{ form.father_name.label() }} {{ form.father_name(class='father_name form_input') }}
+      <button type="button" name="button" onclick="dublicateEverywhere('father_name', this)">Dublicate</button><br>
+
+      {{ form.birth_date.label() }} {{ form.birth_date(class='datepicker birth_date form_input') }}
+      <button type="button" name="button" onclick="dublicateEverywhere('birth_date', this)">Dublicate</button><br>
+
+      <br>
+
+      {{ form.workplace.label() }} {{ form.workplace(class='workplace form_input') }}
+      <button type="button" name="button" onclick="dublicateEverywhere('workplace', this)">Dublicate</button><br>
+
+      {{ form.work_experience.label() }} {{ form.work_experience(class='work_experience form_input') }}
+      <button type="button" name="button" onclick="dublicateEverywhere('work_experience', this)">Dublicate</button><br>
+
+      {{ form.phone_number.label() }} {{ form.phone_number(class='phone_number form_input') }}
+      <button type="button" name="button" onclick="dublicateEverywhere('phone_number', this)">Dublicate</button><br>
+
+      {{ form.email.label() }} {{ form.email(class='email form_input') }}
+      <button type="button" name="button" onclick="dublicateEverywhere('email', this)">Dublicate</button><br>
+
+      <br>
+
+      {{ form.date_started.label() }} {{ form.date_started(class='datepicker date_started form_input', value=course.date_started) }}
+      <button type="button" name="button" onclick="dublicateEverywhere('date_started', this)">Dublicate</button><br>
+
+      {{ form.date_ended.label() }} {{ form.date_ended(class='datepicker date_ended form_input', value=course.date_ended) }}
+      <button type="button" name="button" onclick="dublicateEverywhere('date_ended', this)">Dublicate</button><br>
+
+      <br><br>
+      <div id="tests">
+        {% for el in range(0, course.tests|length) %}
+        <div class="test-form">
+          <label for="">{{ course.tests[el] }}</label>
+          {{ form.tests[el].value(class='form_input') }}
+          <br> <br>
+        </div>
+        {% endfor %}
+      </div>
+
+      <br>
+      <div id="grades">
+        {% for el in range(0, form.grades|length) %}
+        <div class="grade-form">
+          {{ course.specification[el] }}
+          {{ form.grades[el].value(class='form_input') }}
+          <br> <br>
+        </div>
+        {% endfor %}
+      </div>
+
+      <br>
+      <h4>Best qualifications</h4>
+      <div class="best">
+        {% for el in form.best %}
+        <div class="best-form">
+          <button type="button" name="button" onclick="dublicateEverywhere('{{ el.qual_name.name }}', this)">Dublicate</button>
+          {{ el.qual_name(class=el.qual_name.name + " form_input") }}{{ el.value(class=el.value.name + " form_input") }}
+          <button type="button" name="button" onclick="dublicateEverywhere('{{ el.value.name }}', this)">Dublicate</button>
+        </div>
+        {% endfor %}
+      </div>
+
+      <br>
+      <h4>Worst qualifications</h4>
+      <div class="worst">
+        {% for el in form.worst %}
+        <div class="worst-form">
+          <button type="button" name="button" onclick="dublicateEverywhere('{{ el.qual_name.name }}', this)">Dublicate</button>
+          {{ el.qual_name(class=el.qual_name.name + " form_input") }}{{ el.value(class=el.value.name + " form_input") }}
+          <button type="button" name="button" onclick="dublicateEverywhere('{{ el.value.name }}', this)">Dublicate</button>
+        </div>
+        {% endfor %}
+      </div>
+
+      <br><br>
+
+      {{ form.problem_points.label() }} {{ form.problem_points(class='problem_points form_input') }}
+      <button type="button" name="button" onclick="dublicateEverywhere('problem_points', this)">Dublicate</button><br>
+
+      {{ form.overall_evaluation.label() }} {{ form.overall_evaluation(class='overall_evaluation form_input') }}
+      <button type="button" name="button" onclick="dublicateEverywhere('overall_evaluation', this)">Dublicate</button><br>
+
+      {{ form.recommendations.label() }} {{ form.recommendations(class='recommendations form_input') }}
+      <button type="button" name="button" onclick="dublicateEverywhere('recommendations', this)">Dublicate</button><br>
+
+      <button type="button" onclick="deleteForm(this)">Delete</button> <br><br><br>
+    </div>
+
+    {% endfor %}
+  </div>
+  <br>
+  {{ students.submit() }}
+</form>
+<br>
+<br>
+<button onclick="window.location.href='{{ url_for('admin') }}'">Back</button>
+
+<script type="text/javascript">
+  let blankForm = document.getElementsByClassName("form")[0].cloneNode(true)
+  let blankFormInputs = blankForm.getElementsByTagName("input")
+
+  let blankTestForm = document.getElementsByClassName("test-form")[0].cloneNode(true)
+
+  for (var i = 0; i < blankFormInputs.length; i++) {
+    blankFormInputs[i].value = ""
+  }
+
+  let allFormsWrapper = document.getElementById("allForms")
+  let allForms = allFormsWrapper.getElementsByClassName("form")
+
+  for (var i = 1; i < allForms.length; i++) {
+    allForms[i].remove()
+  }
+
+  function addNew() {
+    let allFormsWrapper = document.getElementById("allForms")
+    let allForms = allFormsWrapper.getElementsByClassName("form")
+
+    if (allForms.length > 99) {
+      alert("You can only add 100 students in a time")
+      return
+    }
+
+    let formInputIds = []
+    for (var i = 0; i < allForms.length; i++) {
+      formInputIds.push(parseInt(allForms[i].getElementsByClassName("form_input")[0].name.split('-')[1]))
+    }
+
+    let max = 0
+
+    for (var i = 0; i < formInputIds.length; i++) {
+      if (formInputIds[i] > max) {
+        max = formInputIds[i]
+      }
+    }
+
+    let newFormName = `forms-${max + 1}-`
+    let newForm = blankForm.cloneNode(true)
+    let formInputs = newForm.getElementsByClassName("form_input")
+    let formLabels = newForm.getElementsByTagName("label")
+
+    for (var i = 0; i < formInputs.length; i++) {
+      form_name = formInputs[i].name.split('-').splice(2).join('-')
+      formInputs[i].setAttribute("name", newFormName + form_name)
+      formInputs[i].setAttribute("id", newFormName + form_name)
+
+      if (formLabels[i]) {
+        formLabels[i].setAttribute("for", newFormName + form_name)
+      }
+    }
+
+    allFormsWrapper.appendChild(newForm)
+  }
+
+  function deleteForm(el) {
+    el.parentNode.remove()
+  }
+
+  function markAll() {
+    var marks = document.getElementsByClassName("mark")
+    for (var i = 0; i < marks.length; i++) {
+      marks[i].checked = true
+    }
+  }
+
+  function unmarkAll() {
+    var marks = document.getElementsByClassName("mark")
+    for (var i = 0; i < marks.length; i++) {
+      marks[i].checked = false
+    }
+  }
+
+  function deleteMarked() {
+    var marks = document.getElementsByClassName("mark")
+    let toRemove = []
+    for (var i = 0; i < marks.length; i++) {
+      if (marks[i].checked == true) {
+        toRemove.push(marks[i])
+      }
+    }
+    for (var i = 0; i < toRemove.length; i++) {
+      deleteForm(toRemove[i])
+    }
+  }
+
+  function addSeveral() {
+    let number = document.getElementById("addSeveralInput").value
+    while (number>0) {
+      addNew()
+      number -= 1
+    }
+    document.getElementById("addSeveralInput").value = ''
+  }
+
+  function dublicateEverywhere(field, el) {
+    var forms = document.getElementsByClassName("form")
+    let new_value = el.parentNode.getElementsByClassName(field)[0].value
+    for (var i = 0; i < forms.length; i++) {
+      forms[i].getElementsByClassName(field)[0].value = new_value
+    }
+  }
+</script>
+{% endblock %}

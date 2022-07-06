@@ -1,0 +1,15 @@
+.nav {
+  display: flex;
+  justify-content: space-between;
+}
+
+.all-courses-label {
+  display: flex;
+  justify-content: center;
+}
+
+li {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}

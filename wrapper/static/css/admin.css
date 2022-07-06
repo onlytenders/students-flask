@@ -1,0 +1,24 @@
+li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+}
+
+.filter {
+  display: flex;
+  justify-content: center;
+}
+
+.filter-wrapper {
+  width: 100%;
+}
+
+.all-students-label {
+  display: flex;
+  justify-content: center;
+}

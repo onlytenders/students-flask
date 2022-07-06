@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Edit evaluation
+{% endblock %}
+
+{% block body %}
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
+<h3>Edit evaluation</h3>
+<form method="post" action="" enctype="multipart/form-data">
+  {{ students.hidden_tag() }}
+  <div id="allForms">
+    {% for form in students.forms %}
+
+    <div class="form">
+
+      <br>
+
+      <label for="">{{ profile_pic }}</label> {{ form.profile_pic(class='profile_pic form_input') }} <br>
+
+      <br>
+
+      {{ form.firstname.label() }} {{ form.firstname(class='firstname form_input') }} <br>
+
+      {{ form.surname.label() }} {{ form.surname(class='surname form_input') }} <br>
+
+      {{ form.father_name.label() }} {{ form.father_name(class='father_name form_input') }} <br>
+
+      {{ form.birth_date.label() }} {{ form.birth_date(class='datepicker birth_date form_input') }} <br>
+
+      <br>
+
+      {{ form.workplace.label() }} {{ form.workplace(class='workplace form_input') }} <br>
+
+      {{ form.work_experience.label() }} {{ form.work_experience(class='work_experience form_input') }} <br>
+
+      {{ form.phone_number.label() }} {{ form.phone_number(class='phone_number form_input') }} <br>
+
+      {{ form.email.label() }} {{ form.email(class='email form_input') }} <br>
+
+      <br>
+
+      {{ form.date_started.label() }} {{ form.date_started(class='datepicker date_started form_input') }} <br>
+
+      {{ form.date_ended.label() }} {{ form.date_ended(class='datepicker date_ended form_input') }} <br>
+
+      <br><br>
+      <div id="tests">
+        {% for el in range(0, course.tests|length) %}
+        <div class="test-form">
+          <label for="">{{ course.tests[el] }}</label>
+          {{ form.tests[el].value(class='form_input') }}
+          <br> <br>
+        </div>
+        {% endfor %}
+      </div>
+
+      <br>
+      <div id="grades">
+        {% for el in range(0, form.grades|length) %}
+        <div class="grade-form">
+          {{ course.specification[el] }}
+          {{ form.grades[el].value(class='form_input') }}
+          <br> <br>
+        </div>
+        {% endfor %}
+      </div>
+
+      <br>
+      <h4>Best qualifications</h4>
+      <div class="best">
+        {% for el in form.best %}
+        <div class="best-form">
+          {{ el.qual_name }}{{ el.value }}
+        </div>
+        {% endfor %}
+      </div>
+
+      <br>
+      <h4>Worst qualifications</h4>
+      <div class="worst">
+        {% for el in form.worst %}
+        <div class="worst-form">
+          {{ el.qual_name }}{{ el.value }}
+        </div>
+        {% endfor %}
+      </div>
+
+      <br>
+
+      {{ form.problem_points.label() }} {{ form.problem_points(class='problem_points form_input') }} <br>
+
+      {{ form.overall_evaluation.label() }} {{ form.overall_evaluation(class='overall_evaluation form_input') }} <br>
+
+      {{ form.recommendations.label() }} {{ form.recommendations(class='recommendations form_input') }} <br>
+    </div>
+
+    {% endfor %}
+  </div>
+  <br>
+  {{ students.submit() }}
+</form>
+<br>
+<br>
+<button onclick="window.location.href='{{ url_for('admin') }}'">Back</button>
+{% endblock %}

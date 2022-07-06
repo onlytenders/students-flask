@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Login page
+{% endblock %}
+
+{% block css %}
+{{ url_for('static', filename='css/login.css') }}
+{% endblock %}
+
+{% block body %}
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
+<div class="main">
+  <form method="post" id="main-form" class="w3-container">
+    <h3>Авторизация</h3>
+    <input type="text" name="login" class="w3-input"> <br>
+    <input type="password" name="password" class="w3-input"> <br>
+    <input type="submit" value="Log in" class="w3-btn w3-green submit-button">
+  </form>
+</div>
+{% endblock %}

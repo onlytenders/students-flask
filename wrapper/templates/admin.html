@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Все студенты
+{% endblock %}
+
+{% block css %}
+{{ url_for('static', filename='css/admin.css') }}
+{% endblock %}
+
+{% block body %}
+
+<div class="w3-bar w3-green nav">
+  <button class="w3-bar-item w3-button w3-green" onclick="window.location.href='{{ url_for('courselist') }}'">Список курсов</button>
+  <button class="w3-bar-item w3-button w3-green" onclick="window.location.href='{{ url_for('logout_page') }}'">Выйти</button>
+</div>
+
+
+<ul class="w3-ul w3-border all-students-list">
+  <li class="all-students-label"><h2>Все студенты</h2></li>
+  <li class="filter">
+    <form class="" action="{{ url_for('all_students') }}" method="post">
+    {{ search.hidden_tag() }}
+    {{ search.firstname }}
+    {{ search.surname }}
+    {{ search.father_name }}
+    {{ search.date_started }}
+    {{ search.date_ended }}
+    {{ search.submit }}
+    </form>
+  </li>
+  {% for el in students %}
+    <li>
+      <p>{{ el.id }}</p>
+      <p>{{ el.hash }}</p>
+      <a href="/student/{{ el.hash }}">{{ el.name }} {{ el.surname }}</a>
+      <div class="nav">
+        <button onclick="window.location.href='/admin/all_students/{{ el.id }}/edit'">Изменить</button>
+        <button onclick="window.location.href='/admin/all_students/{{ el.id }}/delete'"">Удалить</button>
+      </div>
+  </li>
+  {% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Add new course
+{% endblock %}
+
+{% block css %}
+{{ url_for('static', filename='css/add_new_course.css') }}
+{% endblock %}
+
+{% block body %}
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
+<div class="wrapper">
+  <h3>Добавить новый курс</h3>
+
+  <form action="" method="post">
+    {{ form.hidden_tag() }}
+
+    <div class="block">
+      <h4>Информаця о курсе</h4>
+      <div class="basic">
+        <div class="sub-block">{{ form.name.label() }} {{ form.name(class="w3-input") }}</div>
+        <div class="sub-block">{{ form.price.label() }} {{ form.price(class="w3-input") }}</div>
+        <div class="sub-block">{{ form.description.label() }} {{ form.description(class="w3-input w3-border") }}</div>
+        <div class="sub-block">
+          <div class="dates">
+            <div class="date">{{ form.date_started.label() }} {{ form.date_started(class='datepicker w3-input') }}</div>
+            <div class="date">{{ form.date_ended.label() }} {{ form.date_ended(class='datepicker w3-input') }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h4>Спецификация курса</h4>
+      <div class="specification">
+        <div class="sub-block" id="specification">
+          <button type="button" id="addNewSpecButton" class="w3-button w3-green" onclick='addNewForm("specification", "spec")'>Добавить</button>
+          {% for el in form.specification %}
+          <div class="spec">
+            {{ el.label() }} {{ el(class="w3-input spec-input") }} <button type="button" class="w3-button w3-green delete-button" onclick="deleteForm(this)">Удалить</button>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h4>Тестирование</h4>
+      <div class="tests">
+        <div class="sub-block">
+          <div class="testing-min">
+            {{ form.testing_min.label(class="testing-min-label") }} {{ form.testing_min(class="w3-input spec-input") }}
+          </div>
+        </div>
+        <div class="sub-block" id="tests">
+          <button type="button" id="addNewTestButton" class="w3-button w3-green" onclick='addNewForm("tests", "test")'>Добавить курс</button>
+          {% for el in form.tests %}
+          <div class="test">
+            {{ el.label() }} {{ el(class="w3-input spec-input") }} <button type="button" class="w3-button w3-green delete-button" onclick="deleteForm(this)">Удалить</button>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-block">{{ form.submit(class="w3-button w3-green submit-button") }}</div>
+  </form>
+</div>
+
+<script type="text/javascript">
+  let blankSpec = document.getElementsByClassName("spec")[0].cloneNode(true)
+  let blankTest = document.getElementsByClassName("test")[0].cloneNode(true)
+
+  function addNewForm(wrapper, el) {
+    let spec_wrapper = document.getElementById(wrapper)
+    let spec_inputs = spec_wrapper.getElementsByTagName('input')
+
+    let max = 0
+    for (var i = 0; i < spec_inputs.length; i++) {
+      if (spec_inputs[i].id.split('-')[1] > max) {
+        max = parseInt(spec_inputs[i].id.split('-')[1])
+      }
+    }
+
+    let new_name = ''
+    let new_spec = ''
+    if (wrapper == "specification") {
+      new_name = blankSpec.getElementsByTagName('input')[0].name.split('-')
+      new_spec = blankSpec.cloneNode(true)
+    } else if (wrapper == "tests") {
+      new_name = blankTest.getElementsByTagName('input')[0].name.split('-')
+      new_spec = blankTest.cloneNode(true)
+    }
+    new_name.pop()
+    new_name.push(max+1)
+    new_name = new_name.join('-')
+
+    new_spec.getElementsByTagName("label")[0].setAttribute("for", new_name)
+    new_spec.getElementsByTagName("input")[0].setAttribute("id", new_name)
+    new_spec.getElementsByTagName("input")[0].setAttribute("name", new_name)
+
+    spec_wrapper.appendChild(new_spec)
+  }
+
+  function deleteForm(el) {
+    el.parentNode.remove()
+  }
+</script>
+
+{% endblock %}

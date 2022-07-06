@@ -1,0 +1,30 @@
+input:focus, textarea:focus, select:focus{
+    outline: none;
+}
+
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+#main-form {
+  display: flex;
+  flex-direction: column;
+  padding: 1% 2% 2% 2%;
+  border: 1px solid grey;
+  border-radius: 5px;
+  width: 30%;
+  outline: none;
+}
+
+.submit-button:hover {
+  box-shadow: none;
+}
+
+h3 {
+  text-align: center;
+  padding-bottom: 10px;
+}

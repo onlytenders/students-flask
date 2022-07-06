@@ -1,0 +1,139 @@
+body {
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+  justify-content: center;
+}
+
+input, textarea {
+  outline: none;
+  background-color: #fcfcfc;
+}
+
+label {
+  align-self: flex-start;
+}
+
+.testing-min-label {
+  -ms-align-self: center;
+  align-self: center;
+}
+
+.wrapper {
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+  width: 60%;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  justify-content: center;
+  -ms-align-items: center;
+  align-items: center;
+  padding: 1% 2%;
+}
+
+.basic {
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.dates {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.date {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 40%;
+}
+
+.date > label {
+  align-self: center;
+}
+
+.datepicker {
+  width: auto;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  -ms-align-items: center;
+}
+
+.spec, .test {
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  justify-content: space-between;
+}
+
+.spec > label, .test > label {
+  align-self: center;
+}
+
+.testing-min {
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 50%;
+  align-self: center;
+}
+
+.spec-input {
+    width: 50%;
+}
+
+.sub-block {
+  margin: 20px 0;
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  width: 100%;
+  align-self: center;
+}
+
+.submit-button {
+  width: 50%;
+}
+
+.block {
+  margin: 10px 0;
+  border: 1px solid grey;
+  border-radius: 10px;
+  padding: 3%;
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -ms-align-items: center;
+  align-items: center;
+  background-color: #fcfcfc;
+}
+
+.tests, .specification {
+  width: 100%;
+}
+
+.label-input {
+  display: flex;
+  align-items: center;
+}

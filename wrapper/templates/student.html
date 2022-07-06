@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Student panel
+{% endblock %}
+
+{% block body %}
+<h3>Enter your id to find your evaluation</h3>
+<form method="post">
+  <input type="text" name="hash" id="id">
+  <input type="submit" value="Find">
+</form>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ course.name }}
+{% endblock %}
+
+{% block body %}
+{{ course.name }} <br>
+{{ course.price }} <br>
+{{ course.date_started }} - {{ course.date_ended }} <br>
+{{ course.description}} <br>
+<br><br>
+{{ course.testing_min }} <br>
+{% for el in course.tests %}
+{{ el }} <br>
+{% endfor %}
+<br><br>
+{% for el in course.specification %}
+{{ el }} <br>
+{% endfor %}
+<br>
+
+<ul class="w3-ul w3-border all-students-list">
+  <li class="all-students-label"><h2>Студенты на этом курсе</h2></li>
+  {% for el in students %}
+  <li style="display:flex; align-items:center; justify-content:space-around;">
+      <p>{{ el.id }}</p>
+      <p>{{ el.hash }}</p>
+      <a href="/student/{{ el.hash }}">{{ el.name }} {{ el.surname }}</a>
+      <div class="nav">
+        <button onclick="window.location.href='/admin/all_students/{{ el.id }}/edit'">Изменить</button>
+        <button onclick="window.location.href='/admin/all_students/{{ el.id }}/delete'"">Удалить</button>
+      </div>
+  </li>
+  {% endfor %}
+</ul>
+
+<button onclick="window.location.href='{{ url_for('add_new_student', course_id=course.id) }}'">Add new student</button>
+{% endblock %}

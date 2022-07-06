@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Список курсов
+{% endblock %}
+
+{% block css %}
+{{ url_for('static', filename='css/courselist.css') }}
+{% endblock %}
+
+{% block body %}
+<div class="w3-bar w3-green nav">
+  <button class="w3-bar-item w3-button w3-green" onclick="window.location.href='{{ url_for('add_new_course') }}'">Добавить новый курс</button>
+  <button class="w3-bar-item w3-button w3-green" onclick="window.location.href='{{ url_for('all_students') }}'">Все студенты</button>
+  <button class="w3-bar-item w3-button w3-green" onclick="window.location.href='{{ url_for('logout_page') }}'">Выйти</button>
+</div>
+
+<ul class="w3-ul w3-border all-students-list">
+  <li class="all-courses-label"><h2>Все курсы</h2></li>
+  {% for el in courses %}
+    <li>
+      <p>{{ el.id }}</p>
+      <a href="{{ url_for('courselist')}}/{{ el.id }}">{{ el.name }}</a>
+      <p>{{ el.date_started }}</p>
+      <p>{{ el.date_ended }}</p>
+      <div class="nav">
+        <button onclick="window.location.href='/admin/courselist/{{ el.id }}/edit'">Изменить</button>
+        <button onclick="window.location.href='/admin/courselist/{{ el.id }}/delete'"">Удалить</button>
+      </div>
+  </li>
+  {% endfor %}
+</ul>
+{% endblock %}
